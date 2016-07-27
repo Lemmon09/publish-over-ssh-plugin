@@ -66,9 +66,11 @@ public class BapSshCredentialsDescriptor extends Descriptor<BapSshCredentials> {
             return FormValidation.ok();
         }
         try {
-            return Hudson.getInstance().getRootPath().validateRelativePath(value, true, true);
+            return Jenkins.getInstance().getRootPath().validateRelativePath(value, true, true);
         } catch (final IOException ioe) {
             return FormValidation.error(ioe, "");
+        } catch (final NullPointerException npe) {
+            return FormValidation.error(npe, "");
         }
     }
 
