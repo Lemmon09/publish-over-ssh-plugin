@@ -24,33 +24,15 @@
 
 package jenkins.plugins.publish_over_ssh;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.aryEq;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.isA;
-import static org.easymock.EasyMock.isNull;
-
-import com.jcraft.jsch.*;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.ProxyHTTP;
+import com.jcraft.jsch.ProxySOCKS4;
+import com.jcraft.jsch.ProxySOCKS5;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
-import hudson.FilePath;
-import hudson.model.TaskListener;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import jenkins.plugins.publish_over.BPBuildInfo;
-import jenkins.plugins.publish_over.BapPublisherException;
-import jenkins.plugins.publish_over_ssh.helper.BapSshTestHelper;
-import jenkins.plugins.publish_over_ssh.helper.RandomFile;
-import jenkins.plugins.publish_over_ssh.jenkins.JenkinsTestHelper;
 import org.easymock.classextension.EasyMock;
 import org.easymock.classextension.IMocksControl;
 import org.junit.After;
@@ -61,6 +43,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.jvnet.hudson.test.HudsonTestCase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Properties;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import hudson.FilePath;
+import hudson.model.TaskListener;
+import jenkins.plugins.publish_over.BPBuildInfo;
+import jenkins.plugins.publish_over.BapPublisherException;
+import jenkins.plugins.publish_over_ssh.helper.BapSshTestHelper;
+import jenkins.plugins.publish_over_ssh.helper.RandomFile;
+import jenkins.plugins.publish_over_ssh.jenkins.JenkinsTestHelper;
+
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.aryEq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.isA;
+import static org.easymock.EasyMock.isNull;
 
 @SuppressWarnings({"PMD.SignatureDeclareThrowsException", "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 public class BapSshHostConfigurationTest extends HudsonTestCase {
